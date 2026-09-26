@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import StoryCard from "@/components/StoryCard";
+import { PageAnalytics } from "@/components/AnalyticsTracker";
 import { getAuthorProfile } from "@/sanity/lib/author";
 
 export async function generateMetadata({
@@ -82,6 +83,7 @@ export default async function AuthorPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
       />
+      <PageAnalytics eventName="author_view" payload={{ author: author.name, slug: author.slug }} />
       <SiteHeader />
       <main className="wrap page-shell author-page">
         <header className="author-header">
@@ -101,8 +103,8 @@ export default async function AuthorPage({
             {author.jobTitle && <p className="author-role">{author.jobTitle}</p>}
             {author.bio && <p className="author-bio">{author.bio}</p>}
             <div className="author-links">
-              {author.xUrl && <Link href={author.xUrl}>X</Link>}
-              {author.linkedinUrl && <Link href={author.linkedinUrl}>LinkedIn</Link>}
+              {author.xUrl && <Link href={author.xUrl} data-analytics-event="social_click" data-analytics-label="x">X</Link>}
+              {author.linkedinUrl && <Link href={author.linkedinUrl} data-analytics-event="social_click" data-analytics-label="linkedin">LinkedIn</Link>}
               {author.email && <a href={"mailto:" + author.email}>Email</a>}
             </div>
           </div>
