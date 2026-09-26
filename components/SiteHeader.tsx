@@ -35,8 +35,8 @@ export default function SiteHeader() {
       <div className="utility wrap">
         <span>MAIN STORY</span>
         <nav>
-          <Link href="/category/world">Latest</Link>
-          <a href="#newsletter">Newsletter</a>
+          <Link href="/latest">Latest</Link>
+          <Link href="/#newsletter">Newsletter</Link>
           <button className="link-button" onClick={() => setSearchOpen(true)}>Search</button>
           <button className="link-button" onClick={() => setAppearanceOpen(true)}>Appearance</button>
         </nav>
