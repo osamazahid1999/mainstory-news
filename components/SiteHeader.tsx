@@ -3,9 +3,11 @@
 import Link from "next/link";
 import { useState } from "react";
 import { categories, stories } from "@/lib/mock-data";
+import AppearanceCustomizer from "@/components/AppearanceCustomizer";
 
 export default function SiteHeader() {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [appearanceOpen, setAppearanceOpen] = useState(false);
 
   return (
     <header>
@@ -15,6 +17,7 @@ export default function SiteHeader() {
           <Link href="/category/world">Latest</Link>
           <a href="#newsletter">Newsletter</a>
           <button className="link-button" onClick={() => setSearchOpen(true)}>Search</button>
+          <button className="link-button" onClick={() => setAppearanceOpen(true)}>Appearance</button>
         </nav>
       </div>
 
@@ -57,6 +60,8 @@ export default function SiteHeader() {
           <span>Major developments, verified updates and context from the Main Story newsroom.</span>
         </div>
       </div>
+
+      <AppearanceCustomizer open={appearanceOpen} onClose={() => setAppearanceOpen(false)} />
 
       {searchOpen && (
         <div className="search-overlay" role="dialog" aria-modal="true">
