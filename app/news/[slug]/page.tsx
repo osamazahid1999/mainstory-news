@@ -34,19 +34,22 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
     <>
       <SiteHeader />
       <main className="wrap article-shell">
-        <div className="article-breadcrumbs">
-          <Link href="/">Home</Link> / <Link href={"/category/" + story.category}>{story.category}</Link>
-        </div>
+        <header className="article-header">
+          <div className="article-breadcrumbs">
+            <Link href="/">Home</Link> / <Link href={"/category/" + story.category}>{story.category}</Link>
+          </div>
+          <span className="eyebrow">{story.category.toUpperCase()}</span>
+          <h1>{story.title}</h1>
+          <p className="article-deck">{cmsArticle?.subtitle || story.excerpt}</p>
+          <div className="article-meta">
+            <span>By <strong>{story.author}</strong></span>
+            <span>Published {publishedLabel}</span>
+            <span>{story.readTime}</span>
+          </div>
+        </header>
 
         <article className="article-layout">
           <div className="article-main">
-            <span className="eyebrow">{story.category.toUpperCase()}</span>
-            <h1>{story.title}</h1>
-            <p className="article-deck">{cmsArticle?.subtitle || story.excerpt}</p>
-            <div className="article-meta">
-              By {story.author} · Published {publishedLabel} · {story.readTime}
-            </div>
-
             <figure className="article-featured-media">
               <div className="article-hero article-hero-image">
                 <Image
