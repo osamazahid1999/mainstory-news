@@ -5,12 +5,19 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "studio": "sanity dev",
+    "studio:deploy": "sanity deploy"
   },
   "dependencies": {
     "next": "^15.5.0",
     "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react-dom": "^19.1.1",
+    "sanity": "^6.16.0",
+    "next-sanity": "^13.3.4",
+    "@sanity/vision": "^6.16.0",
+    "@sanity/image-url": "^2.1.1",
+    "styled-components": "^6.5.3"
   },
   "devDependencies": {
     "@types/node": "^22",
