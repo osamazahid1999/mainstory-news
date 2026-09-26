@@ -1246,3 +1246,68 @@ html[data-theme="dark"] .segmented button {
     font-size: 20px;
   }
 }
+
+
+/* Visual balance pass based on local review */
+.hero-main {
+  min-height: 500px;
+}
+
+.hero-art::after {
+  background: linear-gradient(0deg, rgba(0,0,0,.64) 0%, rgba(0,0,0,.26) 58%, rgba(0,0,0,.08) 100%);
+}
+
+.hero-copy {
+  bottom: 38px;
+}
+
+.hero h1 {
+  max-width: 860px;
+}
+
+.logo {
+  font-size: 38px;
+}
+
+.main-nav nav a {
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.utility {
+  font-size: 12.5px;
+}
+
+.ranked h3 {
+  font-size: 18px;
+}
+
+.category-grid .story-card .story-copy p {
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+html[data-theme="dark"] body {
+  background: #11151b;
+}
+
+html[data-theme="dark"] .section,
+html[data-theme="dark"] .content-grid > aside .sidebox {
+  border-color: #333b45;
+}
+
+html[data-theme="dark"] .newsletter,
+html[data-theme="dark"] .video {
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.025);
+}
+
+@media (max-width: 1100px) {
+  .hero-main { min-height: 470px; }
+  .logo { font-size: 35px; }
+}
+
+@media (max-width: 600px) {
+  .hero-main { min-height: 410px; }
+  .hero-copy { bottom: 24px; }
+  .logo { font-size: 29px; }
+}
