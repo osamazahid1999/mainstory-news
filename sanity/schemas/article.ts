@@ -1,0 +1,97 @@
+import { defineArrayMember, defineField, defineType } from "sanity";
+
+export const articleType = defineType({
+  name: "article",
+  title: "Article",
+  type: "document",
+  groups: [
+    { name: "content", title: "Content", default: true },
+    { name: "publishing", title: "Publishing" },
+    { name: "seo", title: "SEO" },
+  ],
+  fields: [
+    defineField({ name: "title", title: "Headline", type: "string", group: "content", validation: (rule) => rule.required().max(140) }),
+    defineField({ name: "slug", title: "Slug", type: "slug", group: "content", options: { source: "title", maxLength: 96 }, validation: (rule) => rule.required() }),
+    defineField({ name: "subtitle", title: "Subtitle / deck", type: "text", rows: 3, group: "content" }),
+    defineField({ name: "excerpt", title: "Excerpt", type: "text", rows: 3, group: "content", validation: (rule) => rule.max(240) }),
+    defineField({ name: "featuredImage", title: "Featured image", type: "editorialImage", group: "content", validation: (rule) => rule.required() }),
+    defineField({
+      name: "articleType",
+      title: "Article type",
+      type: "string",
+      group: "content",
+      initialValue: "news",
+      options: {
+        list: [
+          ["News", "news"],
+          ["Breaking", "breaking"],
+          ["Analysis", "analysis"],
+          ["Explainer", "explainer"],
+          ["Opinion", "opinion"],
+          ["Interview", "interview"],
+          ["Investigation", "investigation"],
+          ["Feature", "feature"],
+          ["Review", "review"],
+          ["Video", "video"],
+          ["Gallery", "gallery"],
+        ],
+        layout: "dropdown",
+      },
+    }),
+    defineField({ name: "authors", title: "Author(s)", type: "array", group: "content", of: [defineArrayMember({ type: "reference", to: [{ type: "author" }] })], validation: (rule) => rule.min(1) }),
+    defineField({ name: "category", title: "Category", type: "reference", group: "content", to: [{ type: "category" }], validation: (rule) => rule.required() }),
+    defineField({ name: "topics", title: "Topics", type: "array", group: "content", of: [defineArrayMember({ type: "reference", to: [{ type: "topic" }] })] }),
+    defineField({
+      name: "body",
+      title: "Story body",
+      type: "array",
+      group: "content",
+      of: [
+        defineArrayMember({
+          type: "block",
+          styles: [
+            { title: "Normal", value: "normal" },
+            { title: "Heading 2", value: "h2" },
+            { title: "Heading 3", value: "h3" },
+            { title: "Quote", value: "blockquote" },
+          ],
+        }),
+        defineArrayMember({ type: "editorialImage" }),
+      ],
+    }),
+    defineField({
+      name: "workflowStatus",
+      title: "Editorial status",
+      type: "string",
+      group: "publishing",
+      initialValue: "draft",
+      options: {
+        list: [
+          ["Draft", "draft"],
+          ["In review", "review"],
+          ["Editing", "editing"],
+          ["Approved", "approved"],
+          ["Scheduled", "scheduled"],
+          ["Published", "published"],
+          ["Archived", "archived"],
+        ],
+      },
+    }),
+    defineField({ name: "publishedAt", title: "Publish date/time", type: "datetime", group: "publishing" }),
+    defineField({ name: "updatedAt", title: "Last editorial update", type: "datetime", group: "publishing" }),
+    defineField({ name: "featured", title: "Featured story", type: "boolean", group: "publishing", initialValue: false }),
+    defineField({ name: "breaking", title: "Breaking news", type: "boolean", group: "publishing", initialValue: false }),
+    defineField({ name: "editorsPick", title: "Editor's pick", type: "boolean", group: "publishing", initialValue: false }),
+    defineField({ name: "allowComments", title: "Allow comments", type: "boolean", group: "publishing", initialValue: false }),
+    defineField({ name: "correctionNote", title: "Correction note", type: "text", rows: 4, group: "publishing" }),
+    defineField({ name: "sources", title: "Sources", type: "array", group: "publishing", of: [defineArrayMember({ type: "url" })] }),
+    defineField({ name: "seo", title: "SEO & social", type: "seo", group: "seo" }),
+  ],
+  preview: {
+    select: {
+      title: "title",
+      subtitle: "workflowStatus",
+      media: "featuredImage",
+    },
+  },
+});
