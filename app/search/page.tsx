@@ -3,13 +3,24 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import { PageAnalytics } from "@/components/AnalyticsTracker";
 import { stories } from "@/lib/mock-data";
+import { searchCmsStories } from "@/sanity/lib/search";
 
 export default async function SearchPage({ searchParams }:{ searchParams: Promise<{q?:string}> }) {
   const { q = "" } = await searchParams;
   const query = q.trim().toLowerCase();
-  const results = query ? stories.filter((story) =>
-    [story.title, story.excerpt, story.category, story.author].join(" ").toLowerCase().includes(query)
-  ) : [];
+  const cmsResults = query ? await searchCmsStories(q) : [];
+  const mockResults = query
+    ? stories.filter((story) =>
+        [story.title, story.excerpt, story.category, story.author]
+          .join(" ")
+          .toLowerCase()
+          .includes(query),
+      )
+    : [];
+  const results = [
+    ...cmsResults,
+    ...mockResults.filter((mock) => !cmsResults.some((story) => story.slug === mock.slug)),
+  ];
 
   return (
     <>
