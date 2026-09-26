@@ -25,6 +25,7 @@ export type CmsArticle = Story & {
   canonicalUrl?: string;
   noIndex?: boolean;
   includeInGoogleNews?: boolean;
+  authorSlug?: string;
 };
 
 const articleQuery = `*[
@@ -38,6 +39,7 @@ const articleQuery = `*[
   "excerpt": coalesce(excerpt, subtitle, ""),
   "category": coalesce(category->slug.current, "world"),
   "author": coalesce(authors[0]->name, "Main Story Desk"),
+  "authorSlug": authors[0]->slug.current,
   featuredImage {
     asset,
     alt,
@@ -68,6 +70,7 @@ export async function getCmsArticle(slug: string): Promise<CmsArticle | null> {
       excerpt?: string;
       category?: string;
       author?: string;
+      authorSlug?: string;
       featuredImage?: SanityEditorialImage;
       body?: unknown[];
       bodyText?: string;
@@ -102,6 +105,7 @@ export async function getCmsArticle(slug: string): Promise<CmsArticle | null> {
       excerpt: article.excerpt || article.subtitle || "",
       category: article.category || "world",
       author: article.author || "Main Story Desk",
+      authorSlug: article.authorSlug,
       image,
       imageAlt: article.featuredImage?.alt || article.title,
       readTime: `${Math.max(1, Math.ceil(words / 220))} min read`,
