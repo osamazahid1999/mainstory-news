@@ -47,15 +47,24 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
               By {story.author} · Published {publishedLabel} · {story.readTime}
             </div>
 
-            <div className="article-hero article-hero-image">
-              <Image
-                src={story.image}
-                alt={story.imageAlt}
-                fill
-                priority
-                sizes="(max-width: 900px) 100vw, 900px"
-              />
-            </div>
+            <figure className="article-featured-media">
+              <div className="article-hero article-hero-image">
+                <Image
+                  src={story.image}
+                  alt={story.imageAlt}
+                  fill
+                  priority
+                  sizes="(max-width: 900px) 100vw, 900px"
+                />
+              </div>
+              {cmsArticle && (cmsArticle.imageCaption || cmsArticle.imageCredit) && (
+                <figcaption>
+                  {cmsArticle.imageCaption}
+                  {cmsArticle.imageCaption && cmsArticle.imageCredit ? " · " : ""}
+                  {cmsArticle.imageCredit && <>Credit: {cmsArticle.imageCredit}</>}
+                </figcaption>
+              )}
+            </figure>
 
             {cmsArticle?.body?.length ? (
               <PortableArticleBody body={cmsArticle.body} />
