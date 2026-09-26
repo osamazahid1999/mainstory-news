@@ -14,17 +14,18 @@ declare global {
 export default function GoogleAnalytics() {
   const pathname = usePathname();
   const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const tagManagerId = process.env.NEXT_PUBLIC_GTM_ID;
 
   useEffect(() => {
-    if (!measurementId || !window.gtag) return;
+    if (!measurementId || tagManagerId || !window.gtag) return;
 
     const pagePath = pathname + window.location.search;
     window.gtag("config", measurementId, {
       page_path: pagePath,
     });
-  }, [measurementId, pathname]);
+  }, [measurementId, pathname, tagManagerId]);
 
-  if (!measurementId) return null;
+  if (!measurementId || tagManagerId) return null;
 
   return (
     <>
