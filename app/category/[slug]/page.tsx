@@ -1,0 +1,41 @@
+import { notFound } from "next/navigation";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import StoryCard from "@/components/StoryCard";
+import { categories, storiesByCategory } from "@/lib/mock-data";
+
+export default async function CategoryPage({ params }:{ params: Promise<{slug:string}> }) {
+  const { slug } = await params;
+  if (!categories.includes(slug)) notFound();
+  const items = storiesByCategory(slug);
+  const label = slug[0].toUpperCase() + slug.slice(1);
+
+  return (
+    <>
+      <SiteHeader />
+      <main className="wrap page-shell">
+        <div className="page-title">
+          <span className="eyebrow">SECTION</span>
+          <h1>{label}</h1>
+          <p>Latest {label.toLowerCase()} reporting, analysis and explainers from Main Story.</p>
+        </div>
+        <div className="category-page-grid">
+          <div className="category-feed">
+            {items.map((story) => <StoryCard key={story.slug} story={story} />)}
+            {items.length === 0 && <p>More stories are coming soon.</p>}
+          </div>
+          <aside className="sidebox">
+            <div className="section-head"><h2>Most Read</h2></div>
+            {items.slice(0,5).map((story,index) => (
+              <div className="ranked" key={story.slug}>
+                <b>{String(index+1).padStart(2,"0")}</b>
+                <h3>{story.title}</h3>
+              </div>
+            ))}
+          </aside>
+        </div>
+      </main>
+      <SiteFooter />
+    </>
+  );
+}
