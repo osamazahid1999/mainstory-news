@@ -6,6 +6,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import StoryCard from "@/components/StoryCard";
 import PortableArticleBody from "@/components/PortableArticleBody";
+import { PageAnalytics } from "@/components/AnalyticsTracker";
 import { storyBySlug, stories as mockStories } from "@/lib/mock-data";
 import { getCmsArticle } from "@/sanity/lib/article";
 import { getHomepageData } from "@/sanity/lib/homepage";
@@ -133,6 +134,10 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+      <PageAnalytics
+        eventName="article_view"
+        payload={{ slug: story.slug, category: story.category, author: story.author }}
       />
       <SiteHeader />
       <main className="wrap article-shell">
