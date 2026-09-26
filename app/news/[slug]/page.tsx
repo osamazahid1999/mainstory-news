@@ -26,6 +26,14 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
     .filter((item) => item.category === story.category && item.slug !== story.slug)
     .slice(0, 3);
 
+  const sidebarStories =
+    related.length > 0
+      ? related
+      : mergedStories.filter((item) => item.slug !== story.slug).slice(0, 3);
+
+  const sidebarTitle =
+    related.length > 0 ? `Also in ${story.category}` : "Latest News";
+
   const publishedLabel = cmsArticle?.publishedAt
     ? new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(cmsArticle.publishedAt))
     : "Sep 26, 2026";
@@ -92,8 +100,8 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
 
           <aside>
             <div className="sidebox">
-              <div className="section-head"><h2>Also in {story.category}</h2></div>
-              {related.map((item) => <StoryCard key={item.slug} story={item} compact />)}
+              <div className="section-head"><h2>{sidebarTitle}</h2></div>
+              {sidebarStories.map((item) => <StoryCard key={item.slug} story={item} compact />)}
             </div>
           </aside>
         </article>
