@@ -71,7 +71,7 @@ export default async function Home() {
         <section id="latest" className="section">
           <div className="section-head">
             <h2>Latest News</h2>
-            <Link href="/search?q=">View all</Link>
+            <Link href="/latest">View all</Link>
           </div>
           <div className="latest-grid">
             {latest.map((story) => (
