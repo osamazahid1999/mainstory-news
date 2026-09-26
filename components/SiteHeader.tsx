@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { categories, stories } from "@/lib/mock-data";
 import AppearanceCustomizer from "@/components/AppearanceCustomizer";
 
@@ -9,6 +9,26 @@ export default function SiteHeader() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [appearanceOpen, setAppearanceOpen] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [breakingItem, setBreakingItem] = useState<{
+    headline: string;
+    href?: string;
+    priority?: string;
+  } | null>(null);
+
+  useEffect(() => {
+    let active = true;
+
+    fetch("/api/breaking")
+      .then((response) => (response.ok ? response.json() : null))
+      .then((item) => {
+        if (active) setBreakingItem(item);
+      })
+      .catch(() => undefined);
+
+    return () => {
+      active = false;
+    };
+  }, []);
 
   return (
     <header>
@@ -57,8 +77,21 @@ export default function SiteHeader() {
 
       <div className="breaking">
         <div className="wrap breaking-row">
-          <b>BREAKING</b>
-          <span>Major developments, verified updates and context from the Main Story newsroom.</span>
+          <b>{breakingItem?.priority === "urgent" ? "URGENT" : "BREAKING"}</b>
+          {breakingItem?.href ? (
+            <Link
+              href={breakingItem.href}
+              data-analytics-event="breaking_click"
+              data-analytics-label={breakingItem.headline}
+            >
+              {breakingItem.headline}
+            </Link>
+          ) : (
+            <span>
+              {breakingItem?.headline ||
+                "Major developments, verified updates and context from the Main Story newsroom."}
+            </span>
+          )}
         </div>
       </div>
 
