@@ -3,14 +3,38 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import StoryCard from "@/components/StoryCard";
-import { stories, storiesByCategory } from "@/lib/mock-data";
+import { stories as mockStories } from "@/lib/mock-data";
+import { getHomepageData } from "@/sanity/lib/homepage";
 
 const sectionNames = ["world", "technology", "business"];
 
-export default function Home() {
-  const lead = stories[0];
-  const secondary = stories.slice(1, 3);
-  const latest = stories.slice(2, 6);
+export default async function Home() {
+  const cms = await getHomepageData();
+  const mergedStories = [
+    ...cms.stories,
+    ...mockStories.filter((mock) => !cms.stories.some((story) => story.slug === mock.slug)),
+  ];
+
+  const lead =
+    mergedStories.find((story) => story.slug === cms.leadSlug) ||
+    cms.stories[0] ||
+    mergedStories[0];
+
+  const configuredSecondary = cms.secondarySlugs
+    .map((slug) => mergedStories.find((story) => story.slug === slug))
+    .filter((story): story is NonNullable<typeof story> => Boolean(story));
+
+  const secondary = [
+    ...configuredSecondary,
+    ...mergedStories.filter((story) => story.slug !== lead.slug),
+  ].filter((story, index, all) => all.findIndex((item) => item.slug === story.slug) === index).slice(0, 2);
+
+  const latest = mergedStories
+    .filter((story) => story.slug !== lead.slug && !secondary.some((item) => item.slug === story.slug))
+    .slice(0, 4);
+
+  const storiesByCategory = (category: string) =>
+    mergedStories.filter((story) => story.category === category.toLowerCase());
 
   return (
     <>
@@ -101,7 +125,7 @@ export default function Home() {
               <div className="section-head">
                 <h2>Most Read</h2>
               </div>
-              {stories.slice(0, 5).map((story, index) => (
+              {mergedStories.slice(0, 5).map((story, index) => (
                 <article className="ranked" key={story.slug}>
                   <b>{String(index + 1).padStart(2, "0")}</b>
                   <div>
@@ -138,7 +162,7 @@ export default function Home() {
             <Link href="/category/video">All videos</Link>
           </div>
           <div className="video-grid">
-            {stories.slice(5, 8).map((story) => (
+            {mergedStories.slice(5, 8).map((story) => (
               <StoryCard key={story.slug} story={story} />
             ))}
           </div>
