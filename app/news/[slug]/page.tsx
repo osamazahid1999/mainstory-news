@@ -98,6 +98,9 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
     author: {
       "@type": "Person",
       name: story.author,
+      ...(cmsArticle?.authorSlug
+        ? { url: `https://mainstorynews.com/author/${cmsArticle.authorSlug}` }
+        : {}),
     },
     publisher: {
       "@type": "Organization",
@@ -141,7 +144,16 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
           <h1>{story.title}</h1>
           <p className="article-deck">{cmsArticle?.subtitle || story.excerpt}</p>
           <div className="article-meta">
-            <span>By <strong>{story.author}</strong></span>
+            <span>
+              By{" "}
+              <strong>
+                {cmsArticle?.authorSlug ? (
+                  <Link href={"/author/" + cmsArticle.authorSlug}>{story.author}</Link>
+                ) : (
+                  story.author
+                )}
+              </strong>
+            </span>
             <span>Published {publishedLabel}</span>
             <span>{story.readTime}</span>
           </div>
