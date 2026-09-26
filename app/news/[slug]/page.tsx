@@ -95,13 +95,13 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
           </aside>
         </article>
 
-        <section className="section">
+        <section className="section article-related-section">
           <div className="section-head"><h2>Related Stories</h2></div>
-          <div className="latest-grid">
+          <div className="article-related-grid">
             {mergedStories
               .filter((item) => item.slug !== story.slug)
               .slice(0,4)
-              .map((item) => <StoryCard key={item.slug} story={item} compact />)}
+              .map((item) => <StoryCard key={item.slug} story={item} />)}
           </div>
         </section>
       </main>
