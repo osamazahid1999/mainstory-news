@@ -3,6 +3,7 @@ import { notFound } from "next/navigation";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import StoryCard from "@/components/StoryCard";
+import { PageAnalytics } from "@/components/AnalyticsTracker";
 import { categories, storiesByCategory } from "@/lib/mock-data";
 import { getCmsCategory } from "@/sanity/lib/category";
 
@@ -62,6 +63,7 @@ export default async function CategoryPage({ params }:{ params: Promise<{slug:st
 
   return (
     <>
+      <PageAnalytics eventName="category_view" payload={{ category: slug, label }} />
       <SiteHeader />
       <main className="wrap page-shell">
         <div className="page-title">
