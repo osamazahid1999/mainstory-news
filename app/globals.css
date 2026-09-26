@@ -1839,3 +1839,111 @@ html[data-theme="dark"] .article-header .article-meta strong {
     display: none;
   }
 }
+
+
+/* Author profile pages */
+.author-page {
+  padding-top: 36px;
+}
+
+.author-header {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 28px;
+  align-items: start;
+  max-width: 980px;
+  padding: 18px 0 32px;
+}
+
+.author-photo {
+  position: relative;
+  width: 150px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--soft);
+}
+
+.author-photo img {
+  object-fit: cover;
+}
+
+.author-header h1 {
+  margin: 6px 0 8px;
+  font-family: var(--headline-font);
+  font-size: clamp(42px, 5vw, 62px);
+  line-height: 1;
+  letter-spacing: -1.5px;
+}
+
+.author-role {
+  margin: 0 0 12px;
+  font-weight: 800;
+}
+
+.author-bio {
+  max-width: 760px;
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--headline-font);
+  font-size: 18px;
+  line-height: 1.6;
+}
+
+.author-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.author-links a:hover {
+  color: var(--accent);
+}
+
+.author-expertise {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.author-expertise span {
+  border: 1px solid var(--line);
+  background: var(--soft);
+  padding: 7px 10px;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.author-story-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+@media (max-width: 900px) {
+  .author-story-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .author-header {
+    grid-template-columns: 1fr;
+  }
+
+  .author-photo {
+    width: 112px;
+  }
+
+  .author-header h1 {
+    font-size: 38px;
+  }
+
+  .author-story-grid {
+    grid-template-columns: 1fr;
+  }
+}
