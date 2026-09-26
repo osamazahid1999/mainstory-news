@@ -1,0 +1,55 @@
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import SiteHeader from "@/components/SiteHeader";
+import SiteFooter from "@/components/SiteFooter";
+import StoryCard from "@/components/StoryCard";
+import { storyBySlug, stories } from "@/lib/mock-data";
+
+export default async function ArticlePage({ params }:{ params: Promise<{slug:string}> }) {
+  const { slug } = await params;
+  const story = storyBySlug(slug);
+  if (!story) notFound();
+
+  const related = stories.filter((item) => item.category === story.category && item.slug !== story.slug).slice(0,3);
+
+  return (
+    <>
+      <SiteHeader />
+      <main className="wrap article-shell">
+        <div className="article-breadcrumbs"><Link href="/">Home</Link> / <Link href={"/category/" + story.category}>{story.category}</Link></div>
+        <article className="article-layout">
+          <div className="article-main">
+            <span className="eyebrow">{story.category.toUpperCase()}</span>
+            <h1>{story.title}</h1>
+            <p className="article-deck">{story.excerpt}</p>
+            <div className="article-meta">By {story.author} · Published Sep 26, 2026 · {story.readTime}</div>
+            <div className="article-hero">MAIN STORY</div>
+            <div className="article-body">
+              <p>This is the first editorial article template for Main Story. It is designed for clear reading, strong hierarchy and future CMS-driven publishing.</p>
+              <p>When the newsroom CMS is connected, this area will support rich text, inline images, embeds, pull quotes, live updates, correction notes, related links and structured article metadata.</p>
+              <h2>Why it matters</h2>
+              <p>Main Story will focus on context as much as the headline itself: what happened, why it matters, who it affects and what comes next.</p>
+              <blockquote>What matters. Why it matters.</blockquote>
+              <h2>What comes next</h2>
+              <p>The next milestone connects these templates to real editorial content and adds the production SEO layer needed for a modern international publication.</p>
+            </div>
+          </div>
+          <aside>
+            <div className="sidebox">
+              <div className="section-head"><h2>Also in {story.category}</h2></div>
+              {related.map((item) => <StoryCard key={item.slug} story={item} compact />)}
+            </div>
+          </aside>
+        </article>
+
+        <section className="section">
+          <div className="section-head"><h2>Related Stories</h2></div>
+          <div className="latest-grid">
+            {stories.filter((item)=>item.slug !== story.slug).slice(0,4).map((item)=><StoryCard key={item.slug} story={item} compact />)}
+          </div>
+        </section>
+      </main>
+      <SiteFooter />
+    </>
+  );
+}
