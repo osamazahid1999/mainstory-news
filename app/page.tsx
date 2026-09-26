@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
@@ -18,7 +19,9 @@ export default function Home() {
       <main className="wrap">
         <section className="hero">
           <article className="hero-main">
-            <div className="hero-art" />
+            <div className="hero-art">
+              <Image src={lead.image} alt={lead.imageAlt} fill priority sizes="(max-width: 900px) 100vw, 70vw" className="hero-image" />
+            </div>
             <div className="hero-copy">
               <Link className="eyebrow" href={"/category/" + lead.category}>
                 MAIN STORY
