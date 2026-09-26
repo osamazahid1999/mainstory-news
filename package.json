@@ -13,11 +13,11 @@
     "next": "^15.5.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "sanity": "^6.16.0",
-    "next-sanity": "^13.3.4",
-    "@sanity/vision": "^6.16.0",
-    "@sanity/image-url": "^2.1.1",
-    "styled-components": "^6.5.3"
+    "sanity": "3.37.1",
+    "next-sanity": "9.4.2",
+    "@sanity/vision": "3.37.1",
+    "@sanity/image-url": "2.1.1",
+    "styled-components": "^6.1.0"
   },
   "devDependencies": {
     "@types/node": "^22",
