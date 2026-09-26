@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -8,6 +9,51 @@ import PortableArticleBody from "@/components/PortableArticleBody";
 import { storyBySlug, stories as mockStories } from "@/lib/mock-data";
 import { getCmsArticle } from "@/sanity/lib/article";
 import { getHomepageData } from "@/sanity/lib/homepage";
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const cmsArticle = await getCmsArticle(slug);
+  const mockStory = storyBySlug(slug);
+  const story = cmsArticle || mockStory;
+
+  if (!story) {
+    return {
+      title: "Story not found",
+      robots: { index: false, follow: false },
+    };
+  }
+
+  const canonical = cmsArticle?.canonicalUrl || `https://mainstorynews.com/news/${story.slug}`;
+  const title = cmsArticle?.seoTitle || story.title;
+  const description = cmsArticle?.seoDescription || story.excerpt;
+  const socialTitle = cmsArticle?.socialTitle || title;
+  const socialDescription = cmsArticle?.socialDescription || description;
+  const socialImage = cmsArticle?.socialImage || story.image;
+
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    robots: cmsArticle?.noIndex ? { index: false, follow: true } : { index: true, follow: true },
+    openGraph: {
+      type: "article",
+      url: canonical,
+      title: socialTitle,
+      description: socialDescription,
+      images: [{ url: socialImage, alt: story.imageAlt }],
+      publishedTime: cmsArticle?.publishedAt,
+      modifiedTime: cmsArticle?.updatedAt,
+      authors: [story.author],
+      section: story.category,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: socialTitle,
+      description: socialDescription,
+      images: [socialImage],
+    },
+  };
+}
 
 export default async function ArticlePage({ params }:{ params: Promise<{slug:string}> }) {
   const { slug } = await params;
@@ -38,8 +84,53 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
     ? new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(cmsArticle.publishedAt))
     : "Sep 26, 2026";
 
+  const canonicalUrl = cmsArticle?.canonicalUrl || `https://mainstorynews.com/news/${story.slug}`;
+  const newsArticleJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "NewsArticle",
+    headline: story.title,
+    description: cmsArticle?.seoDescription || story.excerpt,
+    image: [cmsArticle?.socialImage || story.image],
+    datePublished: cmsArticle?.publishedAt,
+    dateModified: cmsArticle?.updatedAt || cmsArticle?.publishedAt,
+    mainEntityOfPage: canonicalUrl,
+    articleSection: story.category,
+    author: {
+      "@type": "Person",
+      name: story.author,
+    },
+    publisher: {
+      "@type": "Organization",
+      name: "Main Story",
+      url: "https://mainstorynews.com",
+    },
+  };
+
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "Home", item: "https://mainstorynews.com" },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: story.category,
+        item: `https://mainstorynews.com/category/${story.category}`,
+      },
+      { "@type": "ListItem", position: 3, name: story.title, item: canonicalUrl },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(newsArticleJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       <SiteHeader />
       <main className="wrap article-shell">
         <header className="article-header">
