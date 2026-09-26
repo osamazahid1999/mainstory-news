@@ -33,12 +33,14 @@ export async function getCmsArticle(slug: string): Promise<CmsArticle | null> {
       Omit<CmsArticle, "readTime"> & { bodyText?: string }
     >(articleQuery, { slug }, { next: { revalidate: 60 } });
 
-    if (!article?.slug || !article.image) return null;
+    if (!article?.slug) return null;
 
     const words = article.bodyText?.trim().split(/\s+/).filter(Boolean).length || 0;
     const { bodyText, ...rest } = article;
     return {
       ...rest,
+      image: article.image || "https://images.unsplash.com/photo-1495020689067-958852a7765e?auto=format&fit=crop&w=1600&q=80",
+      imageAlt: article.imageAlt || article.title,
       readTime: `${Math.max(1, Math.ceil(words / 220))} min read`,
     };
   } catch {
