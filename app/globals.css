@@ -1311,3 +1311,48 @@ html[data-theme="dark"] .video {
   .hero-copy { bottom: 24px; }
   .logo { font-size: 29px; }
 }
+
+
+/* Hero visibility correction */
+.hero-main {
+  min-height: 450px;
+}
+
+.hero-image {
+  object-position: center 48%;
+  filter: brightness(1.05) saturate(1.02);
+}
+
+.hero-art::after {
+  background: linear-gradient(
+    0deg,
+    rgba(0,0,0,.68) 0%,
+    rgba(0,0,0,.36) 38%,
+    rgba(0,0,0,.10) 72%,
+    rgba(0,0,0,0) 100%
+  );
+}
+
+.hero-copy {
+  bottom: 26px;
+  max-width: 88%;
+}
+
+.hero h1 {
+  font-size: clamp(42px, 3.7vw, 56px);
+  max-width: 830px;
+  margin-top: 9px;
+}
+
+.hero-copy p {
+  max-width: 720px;
+}
+
+@media (max-width: 1100px) {
+  .hero-main { min-height: 430px; }
+}
+
+@media (max-width: 600px) {
+  .hero-main { min-height: 390px; }
+  .hero-copy { max-width: none; }
+}
