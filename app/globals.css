@@ -1407,3 +1407,64 @@ html[data-theme="dark"] .video {
   font-size: 14px;
   line-height: 1.55;
 }
+
+
+/* Article readability and featured-media polish */
+.article-featured-media {
+  margin: 26px 0 30px;
+}
+
+.article-featured-media .article-hero {
+  margin: 0;
+}
+
+.article-featured-media figcaption {
+  margin-top: 9px;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.article-deck {
+  color: #434b55;
+}
+
+html[data-theme="dark"] .article-deck {
+  color: #cbd2da;
+}
+
+html[data-theme="dark"] .article-meta,
+html[data-theme="dark"] .article-breadcrumbs,
+html[data-theme="dark"] .article-featured-media figcaption,
+html[data-theme="dark"] .article-inline-image figcaption {
+  color: #aeb7c2;
+}
+
+html[data-theme="dark"] .article-body p {
+  color: #e3e8ed;
+}
+
+html[data-theme="dark"] .article-body h2,
+html[data-theme="dark"] .article-body h3,
+html[data-theme="dark"] .article-body blockquote {
+  color: #f5f7f9;
+}
+
+.article-hero-image {
+  background: var(--soft);
+}
+
+.article-hero-image img {
+  object-fit: cover;
+  object-position: center;
+}
+
+@media (max-width: 600px) {
+  .article-featured-media {
+    margin-top: 20px;
+  }
+
+  .article-featured-media figcaption {
+    font-size: 11px;
+  }
+}
