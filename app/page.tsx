@@ -3,6 +3,7 @@ import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import StoryCard from "@/components/StoryCard";
+import NewsletterSignup from "@/components/NewsletterSignup";
 import { stories as mockStories } from "@/lib/mock-data";
 import { getHomepageData } from "@/sanity/lib/homepage";
 
@@ -144,14 +145,7 @@ export default async function Home() {
               <p>
                 The essential stories, explained clearly. Delivered to your inbox.
               </p>
-              <form>
-                <input
-                  type="email"
-                  placeholder="Email address"
-                  aria-label="Email address"
-                />
-                <button type="submit">Subscribe</button>
-              </form>
+              <NewsletterSignup />
             </div>
           </aside>
         </section>
