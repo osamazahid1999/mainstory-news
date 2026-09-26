@@ -8,6 +8,7 @@ import AppearanceCustomizer from "@/components/AppearanceCustomizer";
 export default function SiteHeader() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [appearanceOpen, setAppearanceOpen] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   return (
     <header>
@@ -28,7 +29,7 @@ export default function SiteHeader() {
 
       <div className="nav-shell">
         <div className="main-nav wrap">
-          <button className="menu" aria-label="Open menu">☰</button>
+          <button className="menu" aria-label="Open menu" onClick={() => setMobileOpen(true)}>☰</button>
           <nav>
             {categories.map((category) => (
               <div className="nav-item" key={category}>
@@ -60,6 +61,28 @@ export default function SiteHeader() {
           <span>Major developments, verified updates and context from the Main Story newsroom.</span>
         </div>
       </div>
+
+      {mobileOpen && (
+        <div className="mobile-nav-backdrop" onClick={() => setMobileOpen(false)}>
+          <aside className="mobile-nav-panel" onClick={(event) => event.stopPropagation()}>
+            <div className="mobile-nav-head">
+              <Link className="logo" href="/" onClick={() => setMobileOpen(false)}>MAIN <strong>STORY</strong></Link>
+              <button onClick={() => setMobileOpen(false)} aria-label="Close menu">×</button>
+            </div>
+            <nav>
+              {categories.map((category) => (
+                <Link key={category} href={"/category/" + category} onClick={() => setMobileOpen(false)}>
+                  {category[0].toUpperCase() + category.slice(1)}
+                </Link>
+              ))}
+            </nav>
+            <div className="mobile-nav-actions">
+              <button onClick={() => { setMobileOpen(false); setSearchOpen(true); }}>Search</button>
+              <button onClick={() => { setMobileOpen(false); setAppearanceOpen(true); }}>Appearance</button>
+            </div>
+          </aside>
+        </div>
+      )}
 
       <AppearanceCustomizer open={appearanceOpen} onClose={() => setAppearanceOpen(false)} />
 
