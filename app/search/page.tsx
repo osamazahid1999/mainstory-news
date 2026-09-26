@@ -1,6 +1,7 @@
 import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
+import { PageAnalytics } from "@/components/AnalyticsTracker";
 import { stories } from "@/lib/mock-data";
 
 export default async function SearchPage({ searchParams }:{ searchParams: Promise<{q?:string}> }) {
@@ -12,6 +13,12 @@ export default async function SearchPage({ searchParams }:{ searchParams: Promis
 
   return (
     <>
+      {query && (
+        <PageAnalytics
+          eventName="search"
+          payload={{ query: q, result_count: results.length }}
+        />
+      )}
       <SiteHeader />
       <main className="wrap page-shell">
         <div className="page-title">
@@ -27,7 +34,17 @@ export default async function SearchPage({ searchParams }:{ searchParams: Promis
           {results.map((story) => (
             <article key={story.slug}>
               <span className="eyebrow">{story.category.toUpperCase()}</span>
-              <h2><Link href={"/news/" + story.slug}>{story.title}</Link></h2>
+              <h2>
+                <Link
+                  href={"/news/" + story.slug}
+                  data-analytics-event="story_click"
+                  data-analytics-slug={story.slug}
+                  data-analytics-category={story.category}
+                  data-analytics-author={story.author}
+                >
+                  {story.title}
+                </Link>
+              </h2>
               <p>{story.excerpt}</p>
               <small>{story.author} · {story.readTime}</small>
             </article>
