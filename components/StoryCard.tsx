@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import type { Story } from "@/lib/mock-data";
 
@@ -5,6 +6,13 @@ export default function StoryCard({ story, compact=false }: { story: Story; comp
   return (
     <article className={compact ? "story-card compact" : "story-card"}>
       <Link className="story-art" href={"/news/" + story.slug} aria-label={story.title}>
+        <Image
+          src={story.image}
+          alt={story.imageAlt}
+          fill
+          sizes={compact ? "92px" : "(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"}
+          className="story-image"
+        />
         <span>{story.category}</span>
       </Link>
       <div className="story-copy">
