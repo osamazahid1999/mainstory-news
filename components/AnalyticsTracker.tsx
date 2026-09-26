@@ -17,8 +17,13 @@ export function trackAnalyticsEvent(eventName: string, payload: AnalyticsPayload
     Object.entries(payload).filter(([, value]) => value !== undefined),
   );
 
-  window.dataLayer = window.dataLayer || [];
-  window.dataLayer.push({ event: eventName, ...cleanPayload });
+  const usesTagManager = Boolean(process.env.NEXT_PUBLIC_GTM_ID);
+
+  if (usesTagManager) {
+    window.dataLayer = window.dataLayer || [];
+    window.dataLayer.push({ event: eventName, ...cleanPayload });
+    return;
+  }
 
   if (window.gtag) {
     window.gtag("event", eventName, cleanPayload);
