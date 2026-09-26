@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
+import GoogleAnalytics from "@/components/GoogleAnalytics";
 import "./globals.css";
+
+const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 
 export const metadata: Metadata = {
   title: { default: "Main Story", template: "%s | Main Story" },
@@ -26,6 +29,7 @@ export const metadata: Metadata = {
     description:
       "What matters. Why it matters. International news, business, technology, AI, markets, science and culture.",
   },
+  verification: googleVerification ? { google: googleVerification } : undefined,
 };
 
 export default function RootLayout({
@@ -47,6 +51,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
         />
         {children}
+        <GoogleAnalytics />
       </body>
     </html>
   );
