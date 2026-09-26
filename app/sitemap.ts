@@ -16,7 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       changeFrequency: "hourly" as const,
       priority: 0.8,
     })),
-    ...["about", "editorial-policy", "corrections", "contact"].map((slug) => ({
+    ...["latest", "about", "editorial-policy", "corrections", "contact"].map((slug) => ({
       url: `https://mainstorynews.com/${slug}`,
       lastModified: new Date(),
       changeFrequency: "monthly" as const,
