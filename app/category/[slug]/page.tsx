@@ -3,12 +3,24 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import StoryCard from "@/components/StoryCard";
 import { categories, storiesByCategory } from "@/lib/mock-data";
+import { getCmsCategory } from "@/sanity/lib/category";
 
 export default async function CategoryPage({ params }:{ params: Promise<{slug:string}> }) {
   const { slug } = await params;
-  if (!categories.includes(slug)) notFound();
-  const items = storiesByCategory(slug);
-  const label = slug[0].toUpperCase() + slug.slice(1);
+  const cms = await getCmsCategory(slug);
+
+  if (!cms.category && !categories.includes(slug)) notFound();
+
+  const fallbackItems = storiesByCategory(slug);
+  const items = [
+    ...cms.stories,
+    ...fallbackItems.filter((mock) => !cms.stories.some((story) => story.slug === mock.slug)),
+  ];
+
+  const label = cms.category?.title || slug[0].toUpperCase() + slug.slice(1);
+  const description =
+    cms.category?.description ||
+    `Latest ${label.toLowerCase()} reporting, analysis and explainers from Main Story.`;
 
   return (
     <>
@@ -17,13 +29,15 @@ export default async function CategoryPage({ params }:{ params: Promise<{slug:st
         <div className="page-title">
           <span className="eyebrow">SECTION</span>
           <h1>{label}</h1>
-          <p>Latest {label.toLowerCase()} reporting, analysis and explainers from Main Story.</p>
+          <p>{description}</p>
         </div>
+
         <div className="category-page-grid">
           <div className="category-feed">
             {items.map((story) => <StoryCard key={story.slug} story={story} />)}
             {items.length === 0 && <p>More stories are coming soon.</p>}
           </div>
+
           <aside className="sidebox">
             <div className="section-head"><h2>Most Read</h2></div>
             {items.slice(0,5).map((story,index) => (
