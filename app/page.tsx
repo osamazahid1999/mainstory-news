@@ -78,7 +78,6 @@ export default async function Home() {
             ))}
           </div>
         </section>
-        </section>
 
         <section id="latest" className="section home-latest-section">
           <div className="section-head">
