@@ -20,6 +20,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   }
 
   const label = cms.category?.title || slug[0].toUpperCase() + slug.slice(1);
+  const leadStory = items[0];
+  const remainingStories = items.slice(1);
   const description =
     cms.category?.description ||
     `Latest ${label.toLowerCase()} reporting, analysis and explainers from Main Story.`;
@@ -65,20 +67,33 @@ export default async function CategoryPage({ params }:{ params: Promise<{slug:st
     <>
       <PageAnalytics eventName="category_view" payload={{ category: slug, label }} />
       <SiteHeader />
-      <main className="wrap page-shell">
-        <div className="page-title">
-          <span className="eyebrow">SECTION</span>
-          <h1>{label}</h1>
+      <main className="wrap page-shell section-page">
+        <header className="section-hero">
+          <div>
+            <span className="eyebrow">SECTION</span>
+            <h1>{label}</h1>
+          </div>
           <p>{description}</p>
-        </div>
+        </header>
+
+        {leadStory && (
+          <section className="section-lead">
+            <StoryCard story={leadStory} />
+            <div className="section-lead-note">
+              <span className="eyebrow">LEADING THIS SECTION</span>
+              <strong>{label}</strong>
+              <p>Reporting, analysis and explainers selected from the latest published coverage.</p>
+            </div>
+          </section>
+        )}
 
         <div className="category-page-grid">
           <div className="category-feed">
-            {items.map((story) => <StoryCard key={story.slug} story={story} />)}
+            {remainingStories.map((story) => <StoryCard key={story.slug} story={story} />)}
             {items.length === 0 && <p>More stories are coming soon.</p>}
           </div>
 
-          <aside className="sidebox">
+          <aside className="sidebox section-most-read">
             <div className="section-head"><h2>Most Read</h2></div>
             {items.slice(0,5).map((story,index) => (
               <div className="ranked" key={story.slug}>
