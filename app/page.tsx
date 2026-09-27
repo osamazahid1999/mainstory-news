@@ -41,7 +41,7 @@ export default async function Home() {
     <>
       <SiteHeader />
 
-      <main className="wrap">
+      <main className="wrap home-main">
         <section className="hero">
           <article className="hero-main">
             <div className="hero-art">
