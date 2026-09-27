@@ -42,7 +42,18 @@ export default async function Home() {
       <SiteHeader />
 
       <main className="wrap home-main">
-        <section className="hero">
+        <div className="home-edition-bar">
+          <span>INTERNATIONAL EDITION</span>
+          <p>Independent reporting, analysis and explainers across the stories shaping the world.</p>
+          <Link href="/latest">Latest coverage →</Link>
+        </div>
+
+        <section className="home-top-stories">
+          <div className="home-section-label">
+            <span className="eyebrow">TOP STORIES</span>
+            <span>What matters now</span>
+          </div>
+          <div className="hero">
           <article className="hero-main">
             <div className="hero-art">
               <Image src={lead.image} alt={lead.imageAlt} fill priority sizes="(max-width: 900px) 100vw, 70vw" className="hero-image" />
@@ -67,8 +78,9 @@ export default async function Home() {
             ))}
           </div>
         </section>
+        </section>
 
-        <section id="latest" className="section">
+        <section id="latest" className="section home-latest-section">
           <div className="section-head">
             <h2>Latest News</h2>
             <Link href="/latest">View all</Link>
@@ -80,7 +92,7 @@ export default async function Home() {
           </div>
         </section>
 
-        <section className="content-grid">
+        <section className="content-grid home-sections-layout">
           <div>
             {sectionNames.map((sectionName) => {
               const items = storiesByCategory(sectionName);
@@ -121,7 +133,7 @@ export default async function Home() {
             })}
           </div>
 
-          <aside>
+          <aside className="home-rail">
             <div className="sidebox">
               <div className="section-head">
                 <h2>Most Read</h2>
