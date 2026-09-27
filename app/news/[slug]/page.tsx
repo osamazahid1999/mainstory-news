@@ -141,7 +141,7 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
       />
       <SiteHeader />
       <main className="wrap article-shell">
-        <header className="article-header">
+        <header className="article-header article-header--premium">
           <div className="article-breadcrumbs">
             <Link href="/">Home</Link> / <Link href={"/category/" + story.category}>{story.category}</Link>
           </div>
@@ -149,7 +149,7 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
           <h1>{story.title}</h1>
           <p className="article-deck">{cmsArticle?.subtitle || story.excerpt}</p>
           <div className="article-meta">
-            <span>
+            <span className="article-meta-author">
               By{" "}
               <strong>
                 {cmsArticle?.authorSlug ? (
@@ -185,6 +185,11 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
               )}
             </figure>
 
+            <section className="article-context-panel">
+              <span className="eyebrow">WHY IT MATTERS</span>
+              <p>{story.excerpt}</p>
+            </section>
+
             {cmsArticle?.body?.length ? (
               <PortableArticleBody body={cmsArticle.body} />
             ) : (
@@ -206,7 +211,24 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
             )}
           </div>
 
-          <aside>
+          <aside className="article-side-rail">
+            <div className="article-side-summary">
+              <span className="eyebrow">STORY AT A GLANCE</span>
+              <dl>
+                <div>
+                  <dt>Section</dt>
+                  <dd>{story.category}</dd>
+                </div>
+                <div>
+                  <dt>Author</dt>
+                  <dd>{story.author}</dd>
+                </div>
+                <div>
+                  <dt>Read time</dt>
+                  <dd>{story.readTime}</dd>
+                </div>
+              </dl>
+            </div>
             <div className="sidebox">
               <div className="section-head"><h2>{sidebarTitle}</h2></div>
               {sidebarStories.map((item) => <StoryCard key={item.slug} story={item} compact />)}
