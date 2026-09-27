@@ -3,6 +3,7 @@ import GoogleAnalytics from "@/components/GoogleAnalytics";
 import GoogleTagManager from "@/components/GoogleTagManager";
 import AnalyticsTracker from "@/components/AnalyticsTracker";
 import "./globals.css";
+import "./editorial.css";
 
 const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
 
