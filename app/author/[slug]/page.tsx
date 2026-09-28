@@ -86,7 +86,7 @@ export default async function AuthorPage({
       <PageAnalytics eventName="author_view" payload={{ author: author.name, slug: author.slug }} />
       <SiteHeader />
       <main className="wrap page-shell author-page">
-        <header className="author-header">
+        <header className="author-header author-header--premium">
           {author.photo && (
             <div className="author-photo">
               <Image
@@ -97,7 +97,7 @@ export default async function AuthorPage({
               />
             </div>
           )}
-          <div>
+          <div className="author-profile-copy">
             <span className="eyebrow">AUTHOR</span>
             <h1>{author.name}</h1>
             {author.jobTitle && <p className="author-role">{author.jobTitle}</p>}
@@ -110,15 +110,37 @@ export default async function AuthorPage({
           </div>
         </header>
 
-        {author.expertise?.length ? (
-          <div className="author-expertise">
+        <section className="author-profile-grid">
+          <div>
+            {author.expertise?.length ? (
+              <div className="author-expertise">
             {author.expertise.map((item) => (
               <span key={item}>{item}</span>
             ))}
+              </div>
+            ) : null}
           </div>
-        ) : null}
 
-        <section className="section">
+          <aside className="author-facts">
+            <span className="trust-card-kicker">PROFILE</span>
+            <dl>
+              <div>
+                <dt>Role</dt>
+                <dd>{author.jobTitle || "Contributor"}</dd>
+              </div>
+              <div>
+                <dt>Publication</dt>
+                <dd>Main Story</dd>
+              </div>
+              <div>
+                <dt>Published stories</dt>
+                <dd>{stories.length}</dd>
+              </div>
+            </dl>
+          </aside>
+        </section>
+
+        <section className="section author-latest-section">
           <div className="section-head">
             <h2>Latest by {author.name}</h2>
           </div>
