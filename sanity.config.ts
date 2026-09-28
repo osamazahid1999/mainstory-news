@@ -5,7 +5,8 @@ import { structureTool } from "sanity/structure";
 import { visionTool } from "@sanity/vision";
 import { apiVersion, dataset, projectId } from "./sanity/env";
 import { schemaTypes } from "./sanity/schemas";
-import { structure } from "./sanity/structure";\nimport { createArticleDraftAction } from "./sanity/actions/createArticleDraftAction";
+import { structure } from "./sanity/structure";
+import { createArticleDraftAction } from "./sanity/actions/createArticleDraftAction";
 
 export default defineConfig({
   name: "mainstory-newsroom",
@@ -19,5 +20,11 @@ export default defineConfig({
   ],
   schema: {
     types: schemaTypes,
+  },
+  document: {
+    actions: (prev, context) =>
+      context.schemaType === "trendingStory"
+        ? [createArticleDraftAction, ...prev]
+        : prev,
   },
 });
