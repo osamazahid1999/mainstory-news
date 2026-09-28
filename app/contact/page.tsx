@@ -13,6 +13,15 @@ export const metadata: Metadata = {
 export default async function ContactPage() {
   const settings = await getPublicSiteSettings();
   const emailHref = settings.contactEmail ? "mailto:" + settings.contactEmail : undefined;
+  const editorialHref = settings.editorialEmail
+    ? "mailto:" + settings.editorialEmail
+    : emailHref;
+  const correctionsHref = settings.correctionsEmail
+    ? "mailto:" + settings.correctionsEmail
+    : emailHref;
+  const advertisingHref = settings.advertisingEmail
+    ? "mailto:" + settings.advertisingEmail
+    : emailHref;
 
   return (
     <>
@@ -47,21 +56,25 @@ export default async function ContactPage() {
             <span className="contact-icon">01</span>
             <h2>Editorial</h2>
             <p>Questions about coverage, published reporting, story context or newsroom matters.</p>
-            {emailHref ? <a href={emailHref}>Email editorial →</a> : <span>Configure email in Site Settings</span>}
+            {editorialHref ? <a href={editorialHref}>Email editorial →</a> : <span>Configure email in Site Settings</span>}
           </article>
 
           <article>
             <span className="contact-icon">02</span>
             <h2>Corrections</h2>
             <p>Report a possible factual error. Include the story URL, the issue and any supporting source.</p>
-            <Link href="/corrections">Read correction process →</Link>
+            {correctionsHref ? (
+              <a href={correctionsHref}>Report a correction →</a>
+            ) : (
+              <Link href="/corrections">Read correction process →</Link>
+            )}
           </article>
 
           <article>
             <span className="contact-icon">03</span>
             <h2>Partnerships</h2>
             <p>Use this route for partnership, sponsorship or other business-related conversations.</p>
-            {emailHref ? <a href={emailHref}>Discuss a partnership →</a> : <span>Configure email in Site Settings</span>}
+            {advertisingHref ? <a href={advertisingHref}>Discuss advertising →</a> : <span>Configure email in Site Settings</span>}
           </article>
 
           <article>
