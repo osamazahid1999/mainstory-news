@@ -1,0 +1,31 @@
+{
+  "name": "mainstory-news",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "studio": "sanity dev",
+    "studio:deploy": "sanity deploy",
+    "collect:trending": "node scripts/collect-trending.mjs",
+    "cleanup:test-article": "node scripts/remove-osama-biryani.mjs",
+    "verify:trending": "node scripts/verify-trending.mjs"
+  },
+  "dependencies": {
+    "next": "^15.5.0",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "sanity": "3.99.0",
+    "next-sanity": "9.4.2",
+    "@sanity/vision": "3.99.0",
+    "@sanity/image-url": "2.1.1",
+    "styled-components": "^6.1.15"
+  },
+  "devDependencies": {
+    "@types/node": "^22",
+    "@types/react": "^18.3.0",
+    "@types/react-dom": "^18.3.0",
+    "typescript": "^5.8"
+  }
+}
