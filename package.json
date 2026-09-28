@@ -11,7 +11,8 @@
     "collect:trending": "node scripts/collect-trending.mjs",
     "cleanup:test-article": "node scripts/remove-osama-biryani.mjs",
     "verify:trending": "node scripts/verify-trending.mjs",
-    "setup:news-desk": "node scripts/setup-news-desk-author.mjs"
+    "setup:news-desk": "node scripts/setup-news-desk-author.mjs",
+    "setup:launch-settings": "node scripts/setup-launch-settings.mjs"
   },
   "dependencies": {
     "next": "^15.5.0",
@@ -28,5 +29,8 @@
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "typescript": "^5.8"
+  },
+  "engines": {
+    "node": "22.x"
   }
 }
