@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { DocumentActionComponent } from "sanity";
-import { useClient, useToast } from "sanity";
+import { useClient } from "sanity";
 import { apiVersion } from "../env";
 
 type TrendingDocument = {
@@ -41,7 +41,6 @@ function slugify(value: string) {
 
 export const createArticleDraftAction: DocumentActionComponent = (props) => {
   const client = useClient({ apiVersion });
-  const toast = useToast();
   const [working, setWorking] = useState(false);
 
   const source = (props.draft || props.published) as TrendingDocument | null;
@@ -58,11 +57,7 @@ export const createArticleDraftAction: DocumentActionComponent = (props) => {
       !source?.category?._ref,
     onHandle: async () => {
       if (!source?.sourceHeadline || !source.sourceUrl || !source.category?._ref) {
-        toast.push({
-          status: "error",
-          title: "Missing required source information",
-          description: "Headline, source URL and category are required.",
-        });
+        window.alert("Headline, source URL and category are required.");
         props.onComplete();
         return;
       }
@@ -72,6 +67,7 @@ export const createArticleDraftAction: DocumentActionComponent = (props) => {
       try {
         const sourceId = props.id.replace(/^drafts\./, "");
         const articleId = "drafts.article-from-" + sourceId;
+        const articleRefId = "article-from-" + sourceId;
         const title = cleanHeadline(source.sourceHeadline, source.sourceName);
         const slug = slugify(title);
 
@@ -100,27 +96,23 @@ export const createArticleDraftAction: DocumentActionComponent = (props) => {
               status: "drafted",
               articleDraft: {
                 _type: "reference",
-                _ref: articleId,
+                _ref: articleRefId,
                 _weak: true,
               },
             }),
           )
           .commit();
 
-        toast.push({
-          status: "success",
-          title: "Article draft created",
-          description:
-            "Open the linked Article Draft under Workflow to continue editing.",
-        });
+        window.alert(
+          "Article draft created. Open Content → Articles → Drafts to continue editing.",
+        );
       } catch (error) {
         console.error(error);
-        toast.push({
-          status: "error",
-          title: "Could not create article draft",
-          description:
-            error instanceof Error ? error.message : "Please try again.",
-        });
+        window.alert(
+          error instanceof Error
+            ? "Could not create article draft: " + error.message
+            : "Could not create article draft. Please try again.",
+        );
       } finally {
         setWorking(false);
         props.onComplete();
