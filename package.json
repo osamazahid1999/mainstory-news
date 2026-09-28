@@ -9,7 +9,8 @@
     "studio": "sanity dev",
     "studio:deploy": "sanity deploy",
     "collect:trending": "node scripts/collect-trending.mjs",
-    "cleanup:test-article": "node scripts/remove-osama-biryani.mjs"
+    "cleanup:test-article": "node scripts/remove-osama-biryani.mjs",
+    "verify:trending": "node scripts/verify-trending.mjs"
   },
   "dependencies": {
     "next": "^15.5.0",
