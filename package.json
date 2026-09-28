@@ -10,7 +10,8 @@
     "studio:deploy": "sanity deploy",
     "collect:trending": "node scripts/collect-trending.mjs",
     "cleanup:test-article": "node scripts/remove-osama-biryani.mjs",
-    "verify:trending": "node scripts/verify-trending.mjs"
+    "verify:trending": "node scripts/verify-trending.mjs",
+    "setup:news-desk": "node scripts/setup-news-desk-author.mjs"
   },
   "dependencies": {
     "next": "^15.5.0",
