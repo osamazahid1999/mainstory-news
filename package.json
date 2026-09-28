@@ -8,7 +8,8 @@
     "start": "next start",
     "studio": "sanity dev",
     "studio:deploy": "sanity deploy",
-    "collect:trending": "node scripts/collect-trending.mjs"
+    "collect:trending": "node scripts/collect-trending.mjs",
+    "cleanup:test-article": "node scripts/remove-osama-biryani.mjs"
   },
   "dependencies": {
     "next": "^15.5.0",
