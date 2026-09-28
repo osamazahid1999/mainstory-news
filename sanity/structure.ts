@@ -55,7 +55,7 @@ const articleList = (S: Parameters<StructureResolver>[0]) =>
             .title("Needs Work")
             .schemaType("article")
             .filter(
-              '_type == "article" && _id in path("drafts.**") && readyToPublish != true && workflowStatus != "archived"',
+              '_type == "article" && readyToPublish != true && workflowStatus != "published" && workflowStatus != "archived"',
             )
             .defaultOrdering([{ field: "_updatedAt", direction: "desc" }]),
         ),
@@ -66,7 +66,7 @@ const articleList = (S: Parameters<StructureResolver>[0]) =>
             .title("Ready to Publish")
             .schemaType("article")
             .filter(
-              '_type == "article" && _id in path("drafts.**") && readyToPublish == true && factChecked == true && sourcesChecked == true && headlineChecked == true && imageRightsChecked == true && seoChecked == true',
+              '_type == "article" && readyToPublish == true && factChecked == true && sourcesChecked == true && headlineChecked == true && imageRightsChecked == true && seoChecked == true && workflowStatus != "published" && workflowStatus != "archived"',
             )
             .defaultOrdering([{ field: "_updatedAt", direction: "desc" }]),
         ),
