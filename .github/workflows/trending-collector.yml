@@ -1,0 +1,30 @@
+name: Trending News Collector
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 1 * * *"
+    - cron: "0 7 * * *"
+    - cron: "0 13 * * *"
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Collect trending candidates
+        env:
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+          SANITY_API_WRITE_TOKEN: ${{ secrets.SANITY_API_WRITE_TOKEN }}
+        run: npm run collect:trending
