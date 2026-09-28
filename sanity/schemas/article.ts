@@ -7,6 +7,7 @@ export const articleType = defineType({
   groups: [
     { name: "content", title: "Content", default: true },
     { name: "publishing", title: "Publishing" },
+    { name: "review", title: "Editorial Review" },
     { name: "seo", title: "SEO" },
   ],
   fields: [
@@ -85,6 +86,75 @@ export const articleType = defineType({
     defineField({ name: "allowComments", title: "Allow comments", type: "boolean", group: "publishing", initialValue: false }),
     defineField({ name: "correctionNote", title: "Correction note", type: "text", rows: 4, group: "publishing" }),
     defineField({ name: "sources", title: "Sources", type: "array", group: "publishing", of: [defineArrayMember({ type: "url" })] }),
+
+    defineField({
+      name: "factChecked",
+      title: "Fact checked",
+      type: "boolean",
+      group: "review",
+      initialValue: false,
+      description: "Key facts, names, dates, figures and claims have been verified.",
+    }),
+    defineField({
+      name: "sourcesChecked",
+      title: "Sources checked",
+      type: "boolean",
+      group: "review",
+      initialValue: false,
+      description: "Source links are credible, relevant and correctly attributed.",
+    }),
+    defineField({
+      name: "headlineChecked",
+      title: "Headline checked",
+      type: "boolean",
+      group: "review",
+      initialValue: false,
+      description: "Headline is accurate, clear and not misleading.",
+    }),
+    defineField({
+      name: "imageRightsChecked",
+      title: "Image rights checked",
+      type: "boolean",
+      group: "review",
+      initialValue: false,
+      description: "Featured image usage rights, credit and alt text have been checked.",
+    }),
+    defineField({
+      name: "seoChecked",
+      title: "SEO checked",
+      type: "boolean",
+      group: "review",
+      initialValue: false,
+      description: "Slug, excerpt, SEO title/description and metadata have been reviewed.",
+    }),
+    defineField({
+      name: "readyToPublish",
+      title: "Ready to publish",
+      type: "boolean",
+      group: "review",
+      initialValue: false,
+      description: "Final editorial approval. Only mark this after every review item above is complete.",
+      validation: (rule) =>
+        rule.custom((value, context) => {
+          if (!value) return true;
+          const parent = context.parent as {
+            factChecked?: boolean;
+            sourcesChecked?: boolean;
+            headlineChecked?: boolean;
+            imageRightsChecked?: boolean;
+            seoChecked?: boolean;
+          } | undefined;
+
+          return parent?.factChecked &&
+            parent?.sourcesChecked &&
+            parent?.headlineChecked &&
+            parent?.imageRightsChecked &&
+            parent?.seoChecked
+            ? true
+            : "Complete every editorial review check before marking Ready to publish.";
+        }),
+    }),
+
     defineField({ name: "seo", title: "SEO & social", type: "seo", group: "seo" }),
   ],
   preview: {
