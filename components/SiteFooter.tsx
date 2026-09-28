@@ -13,6 +13,12 @@ export default async function SiteFooter() {
 
   return (
     <footer>
+      <div className="wrap footer-topline">
+        <span className="eyebrow">MAIN STORY</span>
+        <p>International reporting, analysis and explainers — built for clarity.</p>
+        <Link href="/latest">Read the latest →</Link>
+      </div>
+
       <div className="wrap footer-grid">
         <div>
           <Link className="logo light" href="/">MAIN <strong>STORY</strong></Link>
