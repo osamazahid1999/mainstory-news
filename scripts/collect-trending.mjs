@@ -56,6 +56,17 @@ const trustedPublishers = new Set([
   "UN News",
 ]);
 
+const categoryDefinitions = [
+  { slug: "world", title: "World", sortOrder: 1, description: "Global affairs, diplomacy, conflict, politics and major international developments." },
+  { slug: "business", title: "Business", sortOrder: 2, description: "Companies, industries, trade, earnings and the global economy." },
+  { slug: "technology", title: "Technology", sortOrder: 3, description: "Technology, software, hardware, cybersecurity, chips and the internet." },
+  { slug: "ai", title: "AI", sortOrder: 4, description: "Artificial intelligence, machine learning, models, products and policy." },
+  { slug: "markets", title: "Markets", sortOrder: 5, description: "Stocks, bonds, commodities, currencies, rates and market-moving developments." },
+  { slug: "science", title: "Science", sortOrder: 6, description: "Science, space, climate, health research and discovery." },
+  { slug: "culture", title: "Culture", sortOrder: 7, description: "Film, television, music, books, art and entertainment." },
+  { slug: "video", title: "Video", sortOrder: 8, description: "Video-led news, interviews, briefings, footage and visual explainers." },
+];
+
 const categoryQueries = {
   world:
     '(world OR international OR diplomacy OR conflict OR election OR government) when:1d',
@@ -147,6 +158,26 @@ async function sanityQuery(query, params = {}) {
   return payload.result;
 }
 
+async function sanityMutate(mutations) {
+  const response = await fetch(
+    `https://${projectId}.api.sanity.io/v${apiVersion}/data/mutate/${dataset}?returnIds=true`,
+    {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ mutations }),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error(`Sanity mutation failed: ${response.status} ${await response.text()}`);
+  }
+
+  return response.json();
+}
+
 async function sanityCreate(document) {
   const response = await fetch(
     `https://${projectId}.api.sanity.io/v${apiVersion}/data/mutate/${dataset}?returnIds=true`,
@@ -172,6 +203,42 @@ async function fetchCategoryMap() {
     '*[_type == "category" && defined(slug.current)]{_id, "slug": slug.current}',
   );
   return new Map(categories.map((item) => [item.slug, item._id]));
+}
+
+async function ensureCategories() {
+  let categoryMap = await fetchCategoryMap();
+  const missing = categoryDefinitions.filter((item) => !categoryMap.has(item.slug));
+
+  if (!missing.length) return categoryMap;
+
+  console.log(`Creating ${missing.length} missing Sanity categor${missing.length === 1 ? "y" : "ies"}...`);
+
+  await sanityMutate(
+    missing.map((item) => ({
+      createIfNotExists: {
+        _id: `category-${item.slug}`,
+        _type: "category",
+        title: item.title,
+        slug: { _type: "slug", current: item.slug },
+        description: item.description,
+        accentColor: "#D71920",
+        showInPrimaryNav: true,
+        sortOrder: item.sortOrder,
+      },
+    })),
+  );
+
+  categoryMap = await fetchCategoryMap();
+
+  for (const item of missing) {
+    if (categoryMap.has(item.slug)) {
+      console.log(`Created category: ${item.title}`);
+    } else {
+      throw new Error(`Failed to create required category: ${item.title}`);
+    }
+  }
+
+  return categoryMap;
 }
 
 async function fetchTodayState() {
@@ -215,7 +282,7 @@ async function fetchCandidates(query) {
 }
 
 async function main() {
-  const categoryMap = await fetchCategoryMap();
+  const categoryMap = await ensureCategories();
   const { counts, duplicateKeys } = await fetchTodayState();
   const created = [];
 
