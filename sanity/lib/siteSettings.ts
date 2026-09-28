@@ -4,6 +4,11 @@ export type PublicSiteSettings = {
   publicationName: string;
   tagline: string;
   contactEmail?: string;
+  editorialEmail?: string;
+  correctionsEmail?: string;
+  advertisingEmail?: string;
+  publisherName?: string;
+  publisherCountry?: string;
   xUrl?: string;
   instagramUrl?: string;
   youtubeUrl?: string;
@@ -17,6 +22,11 @@ export async function getPublicSiteSettings(): Promise<PublicSiteSettings> {
         publicationName,
         tagline,
         contactEmail,
+        editorialEmail,
+        correctionsEmail,
+        advertisingEmail,
+        publisherName,
+        publisherCountry,
         xUrl,
         instagramUrl,
         youtubeUrl,
@@ -30,6 +40,11 @@ export async function getPublicSiteSettings(): Promise<PublicSiteSettings> {
       publicationName: settings?.publicationName || "Main Story",
       tagline: settings?.tagline || "What matters. Why it matters.",
       contactEmail: settings?.contactEmail,
+      editorialEmail: settings?.editorialEmail,
+      correctionsEmail: settings?.correctionsEmail,
+      advertisingEmail: settings?.advertisingEmail,
+      publisherName: settings?.publisherName,
+      publisherCountry: settings?.publisherCountry,
       xUrl: settings?.xUrl,
       instagramUrl: settings?.instagramUrl,
       youtubeUrl: settings?.youtubeUrl,
