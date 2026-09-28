@@ -59,7 +59,7 @@ export default function SiteHeader() {
   };
 
   return (
-    <header>
+    <header className="site-header">
       <div className="utility wrap">
         <span>MAIN STORY</span>
         <nav>
