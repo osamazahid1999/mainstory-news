@@ -37,6 +37,8 @@ export default async function SiteFooter() {
           <Link href="/about">About</Link>
           <Link href="/editorial-policy">Editorial Policy</Link>
           <Link href="/corrections">Corrections</Link>
+          <Link href="/privacy">Privacy Policy</Link>
+          <Link href="/advertise">Advertise With Us</Link>
           <Link href="/contact">Contact</Link>
         </div>
         <div>
