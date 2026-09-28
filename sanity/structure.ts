@@ -78,6 +78,17 @@ const articleList = (S: Parameters<StructureResolver>[0]) =>
             .defaultOrdering([{ field: "_updatedAt", direction: "desc" }]),
         ),
       S.listItem()
+        .title("Ready to Publish")
+        .child(
+          S.documentList()
+            .title("Ready to Publish")
+            .schemaType("article")
+            .filter(
+              '_type == "article" && readyToPublish == true && factChecked == true && sourcesChecked == true && headlineChecked == true && imageRightsChecked == true && seoChecked == true',
+            )
+            .defaultOrdering([{ field: "_updatedAt", direction: "desc" }]),
+        ),
+      S.listItem()
         .title("Published")
         .child(
           S.documentList()
