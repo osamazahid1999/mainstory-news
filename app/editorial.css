@@ -28,9 +28,9 @@ body {
 }
 
 /* Header */
-header {
+.site-header {
   position: relative;
-  z-index: 50;
+  z-index: 200;
 }
 
 .utility {
@@ -2857,5 +2857,67 @@ html[data-theme="dark"] .search-section-links a {
 
   .author-facts {
     padding: 18px;
+  }
+}
+
+
+/* Mobile overlay isolation fix */
+.mobile-nav-backdrop {
+  z-index: 1000;
+  isolation: isolate;
+}
+
+.mobile-nav-panel {
+  position: relative;
+  z-index: 1;
+  overscroll-behavior: contain;
+  padding-bottom: calc(28px + env(safe-area-inset-bottom));
+}
+
+.search-overlay {
+  z-index: 1000;
+}
+
+@media (max-width: 430px) {
+  .mobile-nav-panel {
+    padding: 16px 18px calc(22px + env(safe-area-inset-bottom));
+  }
+
+  .mobile-nav-intro {
+    padding: 20px 0 10px;
+  }
+
+  .mobile-section-nav a {
+    padding: 12px 0;
+  }
+
+  .mobile-section-nav strong {
+    font-size: 20px;
+  }
+
+  .mobile-utility-links {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 18px 0;
+  }
+
+  .mobile-utility-links a {
+    padding: 10px 8px;
+  }
+
+  .mobile-nav-actions {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .mobile-nav-actions button {
+    min-height: 44px;
+    padding: 10px 8px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 340px) {
+  .mobile-utility-links,
+  .mobile-nav-actions {
+    grid-template-columns: 1fr;
   }
 }
