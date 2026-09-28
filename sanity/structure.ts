@@ -77,7 +77,7 @@ const articleList = (S: Parameters<StructureResolver>[0]) =>
             .title("Published")
             .schemaType("article")
             .filter(
-              '_type == "article" && !(_id in path("drafts.**"))',
+              '_type == "article" && workflowStatus == "published"',
             )
             .defaultOrdering([{ field: "publishedAt", direction: "desc" }]),
         ),
