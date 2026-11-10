@@ -18,8 +18,13 @@ export const siteSettingsType = defineType({
     defineField({ name: "publisherName", title: "Publisher / business name", type: "string" }),
     defineField({ name: "publisherCountry", title: "Publisher country", type: "string" }),
     defineField({ name: "xUrl", title: "X", type: "url" }),
+    defineField({ name: "facebookUrl", title: "Facebook", type: "url" }),
     defineField({ name: "instagramUrl", title: "Instagram", type: "url" }),
     defineField({ name: "youtubeUrl", title: "YouTube", type: "url" }),
+    defineField({ name: "redditUrl", title: "Reddit", type: "url" }),
+    defineField({ name: "substackUrl", title: "Substack", type: "url" }),
+    defineField({ name: "mastodonUrl", title: "Mastodon", type: "url" }),
+    defineField({ name: "blueskyUrl", title: "Bluesky", type: "url" }),
     defineField({ name: "linkedinUrl", title: "LinkedIn", type: "url" }),
   ],
 });
