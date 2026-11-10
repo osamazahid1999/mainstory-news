@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { categories } from "@/lib/mock-data";
 import { getPublicSiteSettings } from "@/sanity/lib/siteSettings";
+import BrandLogo from "@/components/BrandLogo";
 
 export default async function SiteFooter() {
   const settings = await getPublicSiteSettings();
@@ -21,7 +22,7 @@ export default async function SiteFooter() {
 
       <div className="wrap footer-grid">
         <div>
-          <Link className="logo light" href="/">MAIN <strong>STORY</strong></Link>
+          <Link className="brand-logo footer-brand-logo" href="/" aria-label="Main Story News home"><BrandLogo /></Link>
           <p>{settings.tagline}</p>
         </div>
         <div>
