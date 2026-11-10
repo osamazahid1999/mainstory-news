@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1550 230" role="img" aria-labelledby="title">
+  <title id="title">Main Story News</title>
+  <defs>
+    <clipPath id="globe"><circle cx="115" cy="115" r="94"/></clipPath>
+  </defs>
+  <g fill="none" stroke="#0758e8" stroke-width="9" stroke-linecap="round" stroke-linejoin="round">
+    <g clip-path="url(#globe)">
+      <circle cx="115" cy="115" r="94"/>
+      <path d="M115 21c-31 28-47 61-47 94s16 66 47 94m0-188c31 28 47 61 47 94s-16 66-47 94M24 115h182M41 62c45 24 103 24 148 0M41 168c45-24 103-24 148 0"/>
+    </g>
+    <path d="M198 55c26 1 42 9 42 24 0 28-51 68-120 94C45 202-8 202 0 177c3-9 13-19 29-29" stroke-width="12"/>
+  </g>
+  <text x="265" y="159" fill="#1c1c1c" font-family="Arial, Helvetica, sans-serif" font-size="129" font-weight="900" letter-spacing="-6" textLength="1260" lengthAdjust="spacingAndGlyphs">MAIN STORY NEWS</text>
+</svg>

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { categories, stories } from "@/lib/mock-data";
 import AppearanceCustomizer from "@/components/AppearanceCustomizer";
+import BrandLogo from "@/components/BrandLogo";
 
 export default function SiteHeader() {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -75,8 +76,8 @@ export default function SiteHeader() {
       </div>
 
       <div className="masthead wrap">
-        <Link className="logo" href="/" aria-label="Main Story home">
-          MAIN <strong>STORY</strong>
+        <Link className="brand-logo" href="/" aria-label="Main Story News home">
+          <BrandLogo />
         </Link>
         <div className="ad">ADVERTISEMENT</div>
       </div>
@@ -165,11 +166,12 @@ export default function SiteHeader() {
           >
             <div className="mobile-nav-head">
               <Link
-                className="logo"
+                className="brand-logo"
                 href="/"
+                aria-label="Main Story News home"
                 onClick={() => setMobileOpen(false)}
               >
-                MAIN <strong>STORY</strong>
+                <BrandLogo />
               </Link>
               <button
                 className="mobile-close"
