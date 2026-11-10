@@ -4,7 +4,7 @@ export default function NewsletterSignup() {
   if (!signupUrl) {
     return (
       <p className="newsletter-status">
-        Newsletter signup is being prepared for launch.
+        Signups are opening soon.
       </p>
     );
   }
