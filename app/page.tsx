@@ -124,6 +124,17 @@ export default async function Home() {
           </div>
         </section>
 
+        <section className="home-newsletter" id="newsletter" aria-labelledby="home-newsletter-title">
+          <div className="home-newsletter-copy">
+            <span className="eyebrow">THE MAIN STORY NEWSLETTER</span>
+            <h2 id="home-newsletter-title">Stay ahead of the story.</h2>
+            <p>A concise briefing of the stories that matter, with context beyond the headlines.</p>
+          </div>
+          <div className="home-newsletter-action">
+            <NewsletterSignup />
+          </div>
+        </section>
+
         <section className="content-grid home-sections-layout">
           <div>
             {sectionNames.map((sectionName) => {
@@ -192,15 +203,6 @@ export default async function Home() {
               ))}
             </div>
 
-            <div className="sidebox newsletter" id="newsletter">
-              <span className="eyebrow">NEWSLETTER</span>
-              <h2>The Daily Main Story</h2>
-              <p>
-                The essential stories, explained clearly. Delivered to your
-                inbox.
-              </p>
-              <NewsletterSignup />
-            </div>
           </aside>
         </section>
 
