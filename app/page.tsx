@@ -176,14 +176,14 @@ export default async function Home() {
           <aside className="home-rail">
             <div className="sidebox">
               <div className="section-head">
-                <h2>Most Read</h2>
+                <h2>Editor's picks</h2>
               </div>
 
               {mergedStories.slice(0, 5).map((story, index) => (
                 <article className="ranked" key={story.slug}>
                   <b>{String(index + 1).padStart(2, "0")}</b>
                   <div>
-                    <span className="eyebrow">TRENDING</span>
+                    <span className="eyebrow">SELECTED STORY</span>
                     <h3>
                       <Link href={"/news/" + story.slug}>{story.title}</Link>
                     </h3>
@@ -204,10 +204,10 @@ export default async function Home() {
           </aside>
         </section>
 
-        <section className="section video" id="video">
+        <section className="section video" id="explore">
           <div className="section-head">
-            <h2>Watch</h2>
-            <Link href="/category/video">All videos</Link>
+            <h2>More to explore</h2>
+            <Link href="/latest">All stories</Link>
           </div>
 
           <div className="video-grid">

@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
-      NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+      # Project IDs are public; the live site's Sanity image URLs use this ID.
+      NEXT_PUBLIC_SANITY_PROJECT_ID: r2d3425c
       NEXT_PUBLIC_SANITY_DATASET: production
 
     steps:
