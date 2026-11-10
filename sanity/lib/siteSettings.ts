@@ -10,8 +10,13 @@ export type PublicSiteSettings = {
   publisherName?: string;
   publisherCountry?: string;
   xUrl?: string;
+  facebookUrl?: string;
   instagramUrl?: string;
   youtubeUrl?: string;
+  redditUrl?: string;
+  substackUrl?: string;
+  mastodonUrl?: string;
+  blueskyUrl?: string;
   linkedinUrl?: string;
 };
 
@@ -28,8 +33,13 @@ export async function getPublicSiteSettings(): Promise<PublicSiteSettings> {
         publisherName,
         publisherCountry,
         xUrl,
+        facebookUrl,
         instagramUrl,
         youtubeUrl,
+        redditUrl,
+        substackUrl,
+        mastodonUrl,
+        blueskyUrl,
         linkedinUrl
       }`,
       {},
@@ -46,8 +56,13 @@ export async function getPublicSiteSettings(): Promise<PublicSiteSettings> {
       publisherName: settings?.publisherName,
       publisherCountry: settings?.publisherCountry,
       xUrl: settings?.xUrl,
+      facebookUrl: settings?.facebookUrl,
       instagramUrl: settings?.instagramUrl,
       youtubeUrl: settings?.youtubeUrl,
+      redditUrl: settings?.redditUrl,
+      substackUrl: settings?.substackUrl,
+      mastodonUrl: settings?.mastodonUrl,
+      blueskyUrl: settings?.blueskyUrl,
       linkedinUrl: settings?.linkedinUrl,
     };
   } catch {
