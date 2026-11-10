@@ -2,15 +2,20 @@ import Link from "next/link";
 import { categories } from "@/lib/mock-data";
 import { getPublicSiteSettings } from "@/sanity/lib/siteSettings";
 import BrandLogo from "@/components/BrandLogo";
+import { siFacebook, siInstagram, siX, siYoutube, siReddit, siSubstack, siMastodon, siBluesky } from "simple-icons";
 
 export default async function SiteFooter() {
   const settings = await getPublicSiteSettings();
   const socialLinks = [
-    { label: "YouTube", href: settings.youtubeUrl },
-    { label: "Instagram", href: settings.instagramUrl },
-    { label: "X", href: settings.xUrl },
-    { label: "LinkedIn", href: settings.linkedinUrl },
-  ].filter((item): item is { label: string; href: string } => Boolean(item.href));
+    { label: "Facebook", href: settings.facebookUrl, icon: siFacebook },
+    { label: "Instagram", href: settings.instagramUrl, icon: siInstagram },
+    { label: "X", href: settings.xUrl, icon: siX },
+    { label: "YouTube", href: settings.youtubeUrl, icon: siYoutube },
+    { label: "Reddit", href: settings.redditUrl, icon: siReddit },
+    { label: "Substack", href: settings.substackUrl, icon: siSubstack },
+    { label: "Mastodon", href: settings.mastodonUrl, icon: siMastodon },
+    { label: "Bluesky", href: settings.blueskyUrl, icon: siBluesky },
+  ];
 
   return (
     <footer>
@@ -44,22 +49,16 @@ export default async function SiteFooter() {
         </div>
         <div>
           <h4>Follow</h4>
-          {socialLinks.length > 0 ? (
-            socialLinks.map((item) => (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noreferrer"
-                data-analytics-event="social_click"
-                data-analytics-label={item.label.toLowerCase()}
-              >
-                {item.label}
-              </a>
-            ))
-          ) : (
-            <span className="footer-muted">Social links are configured in Site Settings.</span>
-          )}
+          <div className="footer-socials" aria-label="Social profiles">
+            {socialLinks.map((item) => {
+              const icon = <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d={item.icon.path} /></svg>;
+              return item.href ? (
+                <a key={item.label} className="footer-social" href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label} title={item.label} data-analytics-event="social_click" data-analytics-label={item.label.toLowerCase()}>{icon}</a>
+              ) : (
+                <span key={item.label} className="footer-social footer-social-pending" role="img" aria-label={`${item.label} (link coming soon)`} title={`${item.label} — link coming soon`}>{icon}</span>
+              );
+            })}
+          </div>
         </div>
       </div>
       <div className="wrap copyright">© 2026 {settings.publicationName}. All rights reserved.</div>
