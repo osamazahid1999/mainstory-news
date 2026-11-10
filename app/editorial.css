@@ -49,12 +49,14 @@ body {
   border-radius: 0;
 }
 
-.footer-brand-logo .brand-logo-image {
+.footer-brand-logo .brand-logo-image,
+html[data-theme="dark"] .site-header .brand-logo-image {
   filter: brightness(0) invert(1);
 }
 
-/* Restore the original blue globe over the white footer wordmark. */
-.footer-brand-logo::after {
+/* Keep the approved blue globe over the white wordmark on dark surfaces. */
+.footer-brand-logo::after,
+html[data-theme="dark"] .site-header .brand-logo::after {
   content: "";
   position: absolute;
   inset: 0 auto 0 0;
@@ -63,12 +65,8 @@ body {
   pointer-events: none;
 }
 
-html[data-theme="dark"] .brand-logo {
-  background: #fff;
-  border-radius: 6px;
-}
-
-html[data-theme="dark"] .footer-brand-logo {
+html[data-theme="dark"] .site-header .brand-logo {
+  position: relative;
   background: transparent;
   border-radius: 0;
 }
