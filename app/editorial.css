@@ -44,6 +44,11 @@ body {
 .mobile-nav-head .brand-logo { width: min(260px, 66vw); }
 .footer-brand-logo { width: min(310px, 100%); background: #fff; border-radius: 6px; }
 
+html[data-theme="dark"] .brand-logo {
+  background: #fff;
+  border-radius: 6px;
+}
+
 @media (max-width: 600px) {
   .masthead .brand-logo { width: min(300px, 72vw); }
 }
