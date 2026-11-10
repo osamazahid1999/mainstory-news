@@ -42,11 +42,35 @@ body {
 }
 
 .mobile-nav-head .brand-logo { width: min(260px, 66vw); }
-.footer-brand-logo { width: min(310px, 100%); background: #fff; border-radius: 6px; }
+.footer-brand-logo {
+  position: relative;
+  width: min(360px, 100%);
+  background: transparent;
+  border-radius: 0;
+}
+
+.footer-brand-logo .brand-logo-image {
+  filter: brightness(0) invert(1);
+}
+
+/* Restore the original blue globe over the white footer wordmark. */
+.footer-brand-logo::after {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 21%;
+  background: url("/main-story-news-logo.svg") left center / 476.19% 100% no-repeat;
+  pointer-events: none;
+}
 
 html[data-theme="dark"] .brand-logo {
   background: #fff;
   border-radius: 6px;
+}
+
+html[data-theme="dark"] .footer-brand-logo {
+  background: transparent;
+  border-radius: 0;
 }
 
 @media (max-width: 600px) {
