@@ -1695,6 +1695,105 @@ html[data-theme="dark"] .trust-primary-link {
   padding-top: 12px;
 }
 
+.home-top-stories .hero-main {
+  overflow: hidden;
+}
+
+.home-top-stories .hero-image {
+  transition: transform .7s cubic-bezier(.2,.65,.25,1);
+}
+
+.home-top-stories .hero-main:hover .hero-image,
+.home-top-stories .hero-main:focus-within .hero-image {
+  transform: scale(1.035);
+}
+
+.home-discover {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 28px;
+  padding: 24px clamp(20px, 3vw, 36px);
+  margin: 14px 0 22px;
+  border: 1px solid var(--line);
+  border-radius: var(--editorial-radius);
+  background: var(--editorial-surface);
+}
+
+.home-discover-intro {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+}
+
+.home-discover-intro .eyebrow {
+  color: var(--accent);
+}
+
+.home-discover-intro strong {
+  font-family: var(--headline-font);
+  font-size: clamp(19px, 2vw, 25px);
+  line-height: 1.15;
+}
+
+.home-discover-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 9px;
+}
+
+.home-discover-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 9px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+  font-size: 13px;
+  font-weight: 800;
+  white-space: nowrap;
+  transition: transform .2s ease, border-color .2s ease, background .2s ease;
+}
+
+.home-discover-links a:hover,
+.home-discover-links a:focus-visible {
+  transform: translateY(-2px);
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--paper));
+}
+
+.home-discover-links a span {
+  color: var(--accent);
+}
+
+@media (max-width: 900px) {
+  .home-discover {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .home-discover-links {
+    justify-content: flex-start;
+  }
+}
+
+@media (max-width: 640px) {
+  .home-discover {
+    gap: 18px;
+    padding: 22px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-top-stories .hero-image,
+  .home-discover-links a {
+    transition: none;
+  }
+}
+
 .home-latest-section {
   border-top-width: 2px;
 }
