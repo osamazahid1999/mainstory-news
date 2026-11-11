@@ -1747,6 +1747,9 @@ html[data-theme="dark"] .trust-primary-link {
 }
 
 .home-newsletter-action {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
   width: 100%;
   min-width: 0;
 }
@@ -1812,6 +1815,10 @@ html[data-theme="dark"] .trust-primary-link {
     grid-template-columns: 1fr;
     gap: 24px;
     padding: 28px 22px;
+  }
+
+  .home-newsletter-action {
+    justify-content: flex-start;
   }
 }
 
