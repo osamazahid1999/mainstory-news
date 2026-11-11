@@ -1951,11 +1951,56 @@ html[data-theme="dark"] .trust-primary-link {
   line-height: 1.6;
 }
 
+.section-topic-nav {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.section-topic-nav > span {
+  flex: none;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .08em;
+}
+
+.section-topic-nav > div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.section-topic-nav a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 8px 13px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  transition: border-color .2s ease, background .2s ease, color .2s ease;
+}
+
+.section-topic-nav a:hover,
+.section-topic-nav a:focus-visible {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.section-topic-nav a[aria-current="page"] {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fff;
+}
+
 .section-lead {
-  display: grid;
-  grid-template-columns: minmax(0, 1.7fr) minmax(270px, .65fr);
-  gap: 24px;
-  align-items: stretch;
+  display: block;
   padding: 30px 0 40px;
   border-bottom: 1px solid var(--line);
 }
@@ -1976,8 +2021,8 @@ html[data-theme="dark"] .trust-primary-link {
 }
 
 .section-lead > .story-card .story-art {
-  min-height: 390px;
-  aspect-ratio: auto;
+  min-height: 0;
+  aspect-ratio: 16 / 10;
   border-radius: var(--editorial-radius-lg);
 }
 
@@ -2026,7 +2071,18 @@ html[data-theme="dark"] .trust-primary-link {
 }
 
 .section-page .category-feed {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.section-category-stories {
+  padding-top: 38px;
+}
+
+.section-empty {
+  padding: 46px 0;
+  color: var(--muted);
+  font-size: 18px;
 }
 
 .section-most-read {
@@ -2248,6 +2304,16 @@ html[data-theme="dark"] .article-side-summary {
 }
 
 @media (max-width: 900px) {
+  .section-topic-nav {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .section-page .category-feed {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .home-edition-bar {
     grid-template-columns: auto 1fr;
   }
