@@ -6,6 +6,7 @@ import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import StoryCard from "@/components/StoryCard";
 import PortableArticleBody from "@/components/PortableArticleBody";
+import ArticleShare from "@/components/ArticleShare";
 import { PageAnalytics } from "@/components/AnalyticsTracker";
 import { storyBySlug, stories as mockStories } from "@/lib/mock-data";
 import { getCmsArticle } from "@/sanity/lib/article";
@@ -80,6 +81,11 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
 
   const sidebarTitle =
     related.length > 0 ? `Also in ${story.category}` : "Latest News";
+
+  const moreStories = [
+    ...related,
+    ...mergedStories.filter((item) => item.slug !== story.slug && !related.some((relatedItem) => relatedItem.slug === item.slug)),
+  ].slice(0, 4);
 
   const publishedLabel = cmsArticle?.publishedAt
     ? new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(cmsArticle.publishedAt))
@@ -162,6 +168,7 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
             <span>Published {publishedLabel}</span>
             <span>{story.readTime}</span>
           </div>
+          <ArticleShare title={story.title} />
         </header>
 
         <article className="article-layout">
@@ -186,7 +193,7 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
             </figure>
 
             <section className="article-context-panel">
-              <span className="eyebrow">WHY IT MATTERS</span>
+              <span className="eyebrow">IN BRIEF</span>
               <p>{story.excerpt}</p>
             </section>
 
@@ -209,6 +216,10 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
                 <strong>Correction:</strong> {cmsArticle.correctionNote}
               </div>
             )}
+
+            <Link className="article-back-link" href={"/category/" + story.category}>
+              More in {story.category} <span aria-hidden="true">→</span>
+            </Link>
           </div>
 
           <aside className="article-side-rail">
@@ -237,12 +248,9 @@ export default async function ArticlePage({ params }:{ params: Promise<{slug:str
         </article>
 
         <section className="section article-related-section">
-          <div className="section-head"><h2>Related Stories</h2></div>
+          <div className="section-head"><h2>Keep reading</h2><Link href="/latest">All stories</Link></div>
           <div className="article-related-grid">
-            {mergedStories
-              .filter((item) => item.slug !== story.slug)
-              .slice(0,4)
-              .map((item) => <StoryCard key={item.slug} story={item} />)}
+            {moreStories.map((item) => <StoryCard key={item.slug} story={item} />)}
           </div>
         </section>
       </main>
