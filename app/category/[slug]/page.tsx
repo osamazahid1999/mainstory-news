@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import Link from "next/link";
 import SiteHeader from "@/components/SiteHeader";
 import SiteFooter from "@/components/SiteFooter";
 import StoryCard from "@/components/StoryCard";
@@ -90,40 +91,40 @@ export default async function CategoryPage({
           <p>{description}</p>
         </header>
 
+        <nav className="section-topic-nav" aria-label="Browse news sections">
+          <span>Explore sections</span>
+          <div>
+            {categories.map((category) => (
+              <Link
+                key={category}
+                href={"/category/" + category}
+                aria-current={category === slug ? "page" : undefined}
+              >
+                {category.toUpperCase()}
+              </Link>
+            ))}
+          </div>
+        </nav>
+
         {leadStory && (
           <section className="section-lead">
             <StoryCard story={leadStory} />
-            <div className="section-lead-note">
-              <span className="eyebrow">LEADING THIS SECTION</span>
-              <strong>{label}</strong>
-              <p>
-                Reporting, analysis and explainers selected from the latest
-                published coverage.
-              </p>
-            </div>
           </section>
         )}
 
-        <div className="category-page-grid">
-          <div className="category-feed">
-            {remainingStories.map((story) => (
-              <StoryCard key={story.slug} story={story} />
-            ))}
-            {items.length === 0 && <p>More stories are coming soon.</p>}
-          </div>
-
-          <aside className="sidebox section-most-read">
+        {remainingStories.length > 0 && (
+          <section className="section-category-stories" aria-labelledby="section-story-heading">
             <div className="section-head">
-              <h2>Most Read</h2>
+              <h2 id="section-story-heading">More in {label}</h2>
             </div>
-            {items.slice(0, 5).map((story, index) => (
-              <div className="ranked" key={story.slug}>
-                <b>{String(index + 1).padStart(2, "0")}</b>
-                <h3>{story.title}</h3>
-              </div>
-            ))}
-          </aside>
-        </div>
+            <div className="category-feed">
+              {remainingStories.map((story) => (
+                <StoryCard key={story.slug} story={story} />
+              ))}
+            </div>
+          </section>
+        )}
+        {items.length === 0 && <p className="section-empty">More stories are coming soon.</p>}
       </main>
 
       <SiteFooter />
