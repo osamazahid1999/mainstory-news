@@ -111,6 +111,19 @@ export default async function Home() {
           </div>
         </section>
 
+        <nav className="home-discover" aria-label="Explore news topics">
+          <div className="home-discover-intro">
+            <span className="eyebrow">EXPLORE COVERAGE</span>
+            <strong>Follow the stories shaping your world.</strong>
+          </div>
+          <div className="home-discover-links">
+            <Link href="/category/world">World <span aria-hidden="true">↗</span></Link>
+            <Link href="/category/technology">Technology <span aria-hidden="true">↗</span></Link>
+            <Link href="/category/business">Business <span aria-hidden="true">↗</span></Link>
+            <Link href="/latest">All stories <span aria-hidden="true">↗</span></Link>
+          </div>
+        </nav>
+
         <section id="latest" className="section home-latest-section">
           <div className="section-head">
             <h2>Latest News</h2>
