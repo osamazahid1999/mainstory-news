@@ -1751,13 +1751,25 @@ html[data-theme="dark"] .trust-primary-link {
   min-width: 0;
 }
 
-.home-newsletter-action .newsletter-embed {
-  display: block;
-  width: 100%;
-  height: 320px;
-  border: 1px solid #eee;
+.home-newsletter-action .newsletter-signup-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 56px;
+  padding: 14px 24px;
   border-radius: 8px;
-  background: #fff;
+  background: #2f6fe8;
+  color: #fff;
+  font-size: 17px;
+  font-weight: 800;
+  text-decoration: none;
+}
+
+.home-newsletter-action .newsletter-signup-link:hover,
+.home-newsletter-action .newsletter-signup-link:focus-visible {
+  background: #1c57c6;
+  color: #fff;
 }
 
 .home-newsletter-action .newsletter-status {
